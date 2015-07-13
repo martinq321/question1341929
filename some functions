@@ -13,7 +13,15 @@ maxN[n_] :=
  Reverse@Range[n + 1, n + 2]~Join~
   Most@Reverse@Riffle[Range[3, n], Range[3, n]]
 listR[r_] := {0}~Join~Reverse@Range@r~Join~Rest@Range@r~Join~{0}
+redU[list_, n_] := 
+ If[list[[n]] > list[[n - 1]], list[[n]] - n + 1, list[[n]]]
+reduC[list_] := {list[[1]]}~Join~
+  Flatten[redU[list, #] & /@ Range[2, Length@list]]
+  testT[list_] := 
+ Total@Fold[aDD, 
+   listR@((Length@list + 1)/2), (Drop[reduC@list, -2] + 1)]
+ maxX[n_] := Total@Fold[aDD, listR@n, maxN@n]
 
-maxNa@# & /@ Range[4, 8]
-FindSequenceFunction[{6}~
-  Join~(Total@Fold[aDD, listR@#, maxN@#] & /@ Range[3, 30])]
+reduC1@maxNa@# & /@ Range[4, 8]
+{6}~Join~(maxX@# & /@ Range[3, 30])
+FindSequenceFunction[{6}~Join~(maxX@# & /@ Range[3, 30])]
