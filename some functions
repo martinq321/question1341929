@@ -1,0 +1,19 @@
+maxNa[n_] := 
+ Reverse@Range[n + 1, n + 2]~Join~
+   Most@Reverse@Riffle[Range[3, n], Range[3, n]] - 1
+redU1[list_, n_] := 
+ If[list[[n]] >= list[[n - 1]], n + list[[n]] - 1, list[[n]]]
+reduC1[list_] := {list[[1]]}~
+  Join~(redU1[list, #] & /@ Range[2, Length@list])
+aDD[list_, pos_] :=
+ list[[Range[pos - 2]]]~Join~{list[[pos - 1]] + list[[pos]]}~
+  Join~{list[[pos + 1]] + list[[pos]]}~Join~
+  list[[Range[pos + 2, Length@list]]]
+maxN[n_] := 
+ Reverse@Range[n + 1, n + 2]~Join~
+  Most@Reverse@Riffle[Range[3, n], Range[3, n]]
+listR[r_] := {0}~Join~Reverse@Range@r~Join~Rest@Range@r~Join~{0}
+
+maxNa@# & /@ Range[4, 8]
+FindSequenceFunction[{6}~
+  Join~(Total@Fold[aDD, listR@#, maxN@#] & /@ Range[3, 30])]
