@@ -1,4 +1,3 @@
-
 aDD[list_, pos_] :=
  list[[Range[pos - 2]]]~Join~{list[[pos - 1]] + list[[pos]]}~
   Join~{list[[pos + 1]] + list[[pos]]}~Join~
